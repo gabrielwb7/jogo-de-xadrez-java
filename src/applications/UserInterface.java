@@ -1,5 +1,6 @@
 package applications;
 
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
@@ -45,34 +46,46 @@ public class UserInterface {
        }
     }
 
-    public static void printBoard (ChessPiece[][] pieces ) {
+    public static void printMatch(ChessMatch chessMatch) {
+        printBoard(chessMatch.getPieces(), chessMatch);
+        System.out.println();
+        System.out.println("Turn: "+ chessMatch.getTurn());
+        System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
+    }
+
+    public static void printBoard (ChessPiece[][] pieces, ChessMatch chessMatch) {
         for(int i = 0; i < pieces.length; i++)
         {
             System.out.print((8 - i) + " ");
             for(int j = 0; j < pieces.length; j++)
             {
-                printPiece(pieces[i][j], false) ;
+                printPiece(pieces[i][j], false, chessMatch) ;
             }
             System.out.println();
         }
         System.out.println("  a b c d e f g h");
     }
 
-    public static void printBoard (ChessPiece[][] pieces, boolean[][] possibleMoves) {
+    public static void printBoard (ChessPiece[][] pieces, boolean[][] possibleMoves, ChessMatch chessMatch) {
         for(int i = 0; i < pieces.length; i++) {
             System.out.print((8 - i) + " ");
             for(int j = 0; j < pieces.length; j++) {
-                printPiece(pieces[i][j], possibleMoves[i][j]) ;
+                printPiece(pieces[i][j], possibleMoves[i][j], chessMatch) ;
             }
             System.out.println();
         }
         System.out.println("  a b c d e f g h");
     }
 
-    private static  void printPiece(ChessPiece piece, boolean background)
+    private static void printPiece(ChessPiece piece, boolean background, ChessMatch chessMatch)
     {
         if (background) {
-            System.out.print(ANSI_GREEN_BACKGROUND);
+            if (chessMatch.getCurrentPlayer() == Color.WHITE) {
+                System.out.print(ANSI_BLUE_BACKGROUND);
+            }
+            else {
+                System.out.print(ANSI_YELLOW_BACKGROUND);
+            }
         }
 
         if ( piece == null)
@@ -81,7 +94,7 @@ public class UserInterface {
         }
         else {
             if (piece.getColor() == Color.WHITE) {
-                System.out.print(ANSI_WHITE + piece + ANSI_RESET);
+                System.out.print(ANSI_CYAN + piece + ANSI_RESET);
             }
             else {
                 System.out.print(ANSI_YELLOW + piece + ANSI_RESET);

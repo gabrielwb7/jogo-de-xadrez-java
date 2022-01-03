@@ -13,19 +13,19 @@ public class Program {
 
         Scanner input= new Scanner(System.in);
         ChessMatch chessMatch = new ChessMatch();
-        UserInterface.printBoard(chessMatch.getPieces());
+        UserInterface.printBoard(chessMatch.getPieces(), chessMatch);
 
         while(true) {
             try {
                 UserInterface.clearScreen();
-                UserInterface.printBoard(chessMatch.getPieces());
+                UserInterface.printMatch(chessMatch);
                 System.out.println("");
                 System.out.print("Source: ");
                 ChessPosition source = UserInterface.readChessPosition(input);
 
                 boolean[][] possibleMoves = chessMatch.possibleMoves(source);
                 UserInterface.clearScreen();
-                UserInterface.printBoard(chessMatch.getPieces(), possibleMoves);
+                UserInterface.printBoard(chessMatch.getPieces(), possibleMoves, chessMatch);
 
                 System.out.println();
                 System.out.print("Target: ");
